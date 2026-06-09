@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
+import authRoutes from "./routes/auth.routes";
 import bookmarkRoutes from "./routes/bookmarks.routes";
 
 dotenv.config();
@@ -10,7 +12,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// ROUTES
+app.use("/auth", authRoutes);
 app.use("/bookmarks", bookmarkRoutes);
 
 app.get("/", (req, res) => {

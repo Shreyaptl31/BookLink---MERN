@@ -13,11 +13,20 @@ export const getBookmarks = async (req: any, res: any) => {
 
 // CREATE
 export const createBookmark = async (req: any, res: any) => {
-  const { title, url, is_public, user_id } = req.body;
+  const { title, url, is_public } = req.body;
+
+  const user_id = req.user.id;
 
   const { data, error } = await supabase
     .from("bookmarks")
-    .insert([{ title, url, is_public, user_id }])
+    .insert([
+      {
+        title,
+        url,
+        is_public,
+        user_id,
+      },
+    ])
     .select();
 
   if (error) return res.status(500).json({ error: error.message });
