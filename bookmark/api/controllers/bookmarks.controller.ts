@@ -129,6 +129,8 @@ export const getPublicProfile = async (
 
   res.json({
     handle: profile.handle,
+    full_name: profile.full_name ?? null,   // ← now included
+    avatar_url: profile.avatar_url ?? null,
     bookmarks,
   });
 };
