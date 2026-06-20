@@ -36,11 +36,9 @@ BookLink is a personal bookmark management application that allows users to secu
 
 ## Project Structure
 
-```text
 booklink/
 ├── web/          # React frontend
 ├── api/          # Express backend
-```
 
 ## Key Features
 
@@ -69,18 +67,4 @@ Users can only access their own bookmarks. APIs are protected with JWT authentic
 ### Public Profiles
 
 Users can claim a unique handle. Anyone can visit:
-
-```text
 /<handle>
-```
-
-to view that user's public bookmarks.
-
-## Future Improvements
-
-With more time, I would add:
-
-* Bookmark categories and tags
-* Search and filtering
-* Responsive UI improvements
-* Analytics for public profiles
