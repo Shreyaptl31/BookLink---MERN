@@ -18,6 +18,6 @@ router.put("/:id", authMiddleware, updateBookmark);
 router.delete("/:id", authMiddleware, deleteBookmark);
 
 // Public Profile Route
-router.get("/profile/:handle", getPublicProfile);
+router.get("/:handle", getPublicProfile);
 
 export default router;
