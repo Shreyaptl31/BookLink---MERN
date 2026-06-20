@@ -67,9 +67,12 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/bookmarks", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/bookmarks`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       const data = await response.json();
       setBookmarks(Array.isArray(data) ? data : []);
     } catch {
@@ -92,8 +95,8 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
 
       const endpoint = editingId
-        ? `http://localhost:5000/bookmarks/${editingId}`
-        : "http://localhost:5000/bookmarks";
+        ? `${import.meta.env.VITE_API_URL}/bookmarks/${editingId}`
+        : `${import.meta.env.VITE_API_URL}/bookmarks`;
 
       const method = editingId ? "PUT" : "POST";
 
@@ -117,9 +120,7 @@ const Dashboard = () => {
         setEditingId(null);
         setShowAddForm(false);
 
-        showSuccess(
-          editingId ? "Bookmark updated." : "Bookmark saved.",
-        );
+        showSuccess(editingId ? "Bookmark updated." : "Bookmark saved.");
 
         await fetchBookmarks();
       } else {
@@ -158,7 +159,7 @@ const Dashboard = () => {
     setDeletingId(id);
     try {
       const token = localStorage.getItem("token");
-      await fetch(`http://localhost:5000/bookmarks/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/bookmarks/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -251,7 +252,11 @@ const Dashboard = () => {
               >
                 <i
                   className={`bi bi-${
-                    tab === "all" ? "grid" : tab === "public" ? "globe2" : "lock-fill"
+                    tab === "all"
+                      ? "grid"
+                      : tab === "public"
+                        ? "globe2"
+                        : "lock-fill"
                   }`}
                 />
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -433,7 +438,10 @@ const Dashboard = () => {
                             {getDomain(bookmark.url).charAt(0).toUpperCase()}
                           </div>
                           <div className="bl-card-info">
-                            <div className="bl-card-title" title={bookmark.title}>
+                            <div
+                              className="bl-card-title"
+                              title={bookmark.title}
+                            >
                               {bookmark.title}
                             </div>
                             <a

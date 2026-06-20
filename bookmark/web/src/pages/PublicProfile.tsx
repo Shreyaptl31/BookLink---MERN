@@ -43,9 +43,9 @@ const PublicProfile = () => {
 
     const fetchProfile = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5000/bookmarks/${handle}`,
-        );
+const response = await fetch(
+  `${import.meta.env.VITE_API_URL}/bookmarks/${handle}`,
+);
 
         if (!response.ok) {
           throw new Error("Profile not found");
