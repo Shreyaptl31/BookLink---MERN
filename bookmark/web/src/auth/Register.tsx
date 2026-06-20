@@ -4,10 +4,14 @@ import "../styles/Auth.css";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ handle: "", email: "", password: "" });
-  const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState("");
-  const [success, setSuccess]   = useState("");
+  const [formData, setFormData] = useState({
+    handle: "",
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,13 +24,16 @@ const Register = () => {
     setError("");
     setSuccess("");
     try {
-      const res  = await fetch("http://localhost:5000/auth/signup", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error || "Registration failed."); return; }
+      if (!res.ok) {
+        setError(data.error || "Registration failed.");
+        return;
+      }
       setSuccess("Account created! Check your email to verify, then sign in.");
       setTimeout(() => navigate("/"), 2500);
     } catch {
@@ -38,21 +45,23 @@ const Register = () => {
 
   return (
     <div className="auth-shell">
-
       {/* ── Left hero panel ── */}
       <div className="auth-hero">
         <div className="auth-hero-inner">
-          <div className="auth-logo">Book<span>Link</span></div>
+          <div className="auth-logo">
+            Book<span>Link</span>
+          </div>
 
           <h1 className="auth-headline">
-            Claim your<br />
+            Claim your
+            <br />
             <em>personal</em> web.
           </h1>
           <p className="auth-subhead">
             Pick a handle, start saving links, and share your public collection
-            at <strong style={{ color: "#E2E8F0" }}>booklink.app/@you</strong> — in under a minute.
+            at <strong style={{ color: "#E2E8F0" }}>booklink.app/@you</strong> —
+            in under a minute.
           </p>
-
 
           <div className="auth-proof">
             <div className="auth-proof-dots">
@@ -73,7 +82,9 @@ const Register = () => {
         <div className="auth-form-box">
           <div className="auth-form-eyebrow">Get started free</div>
           <h2 className="auth-form-title">Create your account</h2>
-          <p className="auth-form-sub">No credit card. No noise. Just your links, organised.</p>
+          <p className="auth-form-sub">
+            No credit card. No noise. Just your links, organised.
+          </p>
 
           {error && (
             <div className="auth-error">
@@ -108,7 +119,8 @@ const Register = () => {
                 <i className="bi bi-at auth-input-icon" />
               </div>
               <p className="auth-hint">
-                Your public page will be at <strong>booklink.app/@{formData.handle || "yourhandle"}</strong>
+                Your public page will be at{" "}
+                <strong>booklink.app/@{formData.handle || "yourhandle"}</strong>
               </p>
             </div>
 
@@ -147,7 +159,11 @@ const Register = () => {
               </div>
             </div>
 
-            <button className="auth-btn" type="submit" disabled={loading || !!success}>
+            <button
+              className="auth-btn"
+              type="submit"
+              disabled={loading || !!success}
+            >
               {loading ? (
                 <>
                   <span
@@ -166,12 +182,12 @@ const Register = () => {
           </form>
 
           <p className="auth-switch">
-            Already have an account?{" "}
-            <Link to="/">Sign in</Link>
+            Already have an account? <Link to="/">Sign in</Link>
           </p>
 
           <p className="auth-terms">
-            By creating an account you agree to our Terms of Service and Privacy Policy.
+            By creating an account you agree to our Terms of Service and Privacy
+            Policy.
           </p>
         </div>
       </div>

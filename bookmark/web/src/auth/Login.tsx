@@ -6,7 +6,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,13 +18,16 @@ const Login = () => {
     setLoading(true);
     setError("");
     try {
-      const res  = await fetch("http://localhost:5000/auth/login", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error || "Login failed."); return; }
+      if (!res.ok) {
+        setError(data.error || "Login failed.");
+        return;
+      }
       localStorage.setItem("token", data.session.access_token);
       navigate("/dashboard");
     } catch {
@@ -36,19 +39,21 @@ const Login = () => {
 
   return (
     <div className="auth-shell">
-
       {/* ── Left hero panel ── */}
       <div className="auth-hero">
         <div className="auth-hero-inner">
-          <div className="auth-logo">Book<span>Link</span></div>
+          <div className="auth-logo">
+            Book<span>Link</span>
+          </div>
 
           <h1 className="auth-headline">
-            Your bookmarks,<br />
+            Your bookmarks,
+            <br />
             <em>beautifully</em> organised.
           </h1>
           <p className="auth-subhead">
-            Save any link in one click. Filter by public or private.
-            Share your collection with the world via your personal handle.
+            Save any link in one click. Filter by public or private. Share your
+            collection with the world via your personal handle.
           </p>
           <div className="auth-proof">
             <div className="auth-proof-dots">
@@ -69,7 +74,9 @@ const Login = () => {
         <div className="auth-form-box">
           <div className="auth-form-eyebrow">Welcome back</div>
           <h2 className="auth-form-title">Sign in to BookLink</h2>
-          <p className="auth-form-sub">Good to see you again — your bookmarks are waiting.</p>
+          <p className="auth-form-sub">
+            Good to see you again — your bookmarks are waiting.
+          </p>
 
           {error && (
             <div className="auth-error">
@@ -132,8 +139,7 @@ const Login = () => {
           </form>
 
           <p className="auth-switch">
-            New to BookLink?{" "}
-            <Link to="/register">Create a free account</Link>
+            New to BookLink? <Link to="/register">Create a free account</Link>
           </p>
         </div>
       </div>
